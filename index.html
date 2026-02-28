@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drip Shop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <span class="nav-logo">DRIP SHOP</span>
+    <div class="nav-right">
+      <button id="themeToggle" onclick="toggleTheme()">
+        <span class="toggle-icon">☀️</span>
+        <span class="toggle-label">LIGHT</span>
+      </button>
+      <a class="location-btn" href="https://maps.google.com/?q=Nairobi+Kenya"
+         target="_blank" rel="noopener noreferrer" aria-label="Our Shop Location">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span class="location-label">OUR SHOP</span>
+      </a>
+      <div class="cart-wrapper">
+        <button id="cartBtn" onclick="toggleCart()">
+          🛒 <span id="cartCount">0</span>
+        </button>
+        <div id="cartDropdown">
+          <div class="cart-header">
+            <span>YOUR CART</span>
+            <button onclick="clearCart()">CLEAR ALL</button>
+          </div>
+          <div id="cartItems">
+            <p class="cart-empty">— YOUR CART IS EMPTY —</p>
+          </div>
+          <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total">
+              <span>TOTAL</span>
+              <span id="cartTotal">KES 0</span>
+            </div>
+            <button id="checkoutBtn">CHECKOUT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <h1 class="hero-title">DRIP SHOP</h1>
+    <p class="hero-sub">// Fresh drops. No cap. //</p>
+  </div>
+
+  <!-- ── Products ── -->
+  <div class="container" style="padding-top:0;">
+    <h2 class="section-heading"><span class="accent">//</span> ALL PRODUCTS</h2>
+
+    <div class="search-wrap store-search">
+      <input type="search" id="searchInput" placeholder="SEARCH PRODUCTS..."
+             oninput="filterProducts()" autocomplete="off" />
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <p class="search-results-count" id="resultsCount" style="display:none;"></p>
+
+    <div id="productsGrid"></div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">DRIP SHOP</div>
+        <p class="footer-bio">We don't just sell clothes — we sell a lifestyle. Drip Shop is your go-to destination for exclusive streetwear drops, curated fits, and hype pieces that hit different. No basics. No compromises. Just drip.</p>
+        <span class="footer-tag">// EST. 2024 · NAIROBI, KE</span>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="https://kevinmk.infinityfree.me/store.html">Store</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow The Drip</h4>
+        <div class="social-links">
+          <a href="#" class="social-link ig" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Instagram
+          </a>
+          <a href="#" class="social-link tiktok" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            TikTok
+          </a>
+          <a href="#" class="social-link x" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+            Twitter / X
+          </a>
+          <a href="#" class="social-link fb" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a href="#" class="social-link yt" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2024 Drip Shop. All rights reserved.</p>
+      <p class="footer-made">Crafted with 🔥 in Nairobi</p>
+    </div>
+  </footer>
+
+  <!-- ── Checkout Modal ── -->
+  <div id="checkoutOverlay">
+    <div id="checkoutModal">
+
+      <!-- Step 1: Form -->
+      <div id="coStep1">
+        <p class="checkout-title">CHECKOUT</p>
+        <p class="checkout-subtitle">// Complete your order</p>
+        <div class="checkout-summary">
+          <p class="checkout-summary-title">Order Summary</p>
+          <div id="checkoutItems"></div>
+          <div class="checkout-total-row">
+            <span>Total</span>
+            <span id="checkoutTotalAmt"></span>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label" for="coName">Full Name</label>
+          <input type="text" id="coName" placeholder="e.g. John Kamau" />
+        </div>
+        <div class="field-wrap">
+          <label class="field-label" for="coPhone">M-Pesa Phone Number</label>
+          <div class="phone-row">
+            <span class="phone-prefix">🇰🇪 +254</span>
+            <input type="tel" id="coPhone" placeholder="7XXXXXXXX" maxlength="9" />
+          </div>
+        </div>
+        <div class="mpesa-notice">
+          <svg viewBox="0 0 24 24" fill="#c8f135"><circle cx="12" cy="12" r="10" fill="none" stroke="#c8f135" stroke-width="1.5"/><path d="M11 7h2v2h-2zM11 11h2v6h-2z" fill="#c8f135"/></svg>
+          <p>M-PESA STK PUSH<span>You will receive a payment prompt on your phone. Enter your PIN to confirm.</span></p>
+        </div>
+        <div id="coError" class="checkout-error"></div>
+        <div class="checkout-actions">
+          <button class="btn-pay" onclick="submitCheckout()">PAY NOW</button>
+          <button class="btn-cancel" onclick="closeCheckout()">CANCEL</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Processing -->
+      <div id="coStep2" style="display:none;">
+        <div class="checkout-processing">
+          <div class="processing-ring"></div>
+          <p class="processing-text">PROCESSING</p>
+          <p class="processing-sub">Check your phone for M-Pesa prompt...</p>
+        </div>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="coStep3" style="display:none;">
+        <div class="checkout-success">
+          <div class="success-icon">✓</div>
+          <p class="success-title">ORDER PLACED!</p>
+          <p class="success-msg">Your M-Pesa payment request has been sent.<br/>Enter your PIN on your phone to complete.</p>
+          <p class="success-order-id" id="coOrderId"></p>
+          <button class="btn-done" onclick="closeCheckout()">DONE</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── WhatsApp Float ── -->
+  <div class="whatsapp-float">
+    <span class="whatsapp-tooltip">Chat with us</span>
+    <a class="whatsapp-btn" href="https://wa.me/254785721923" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
+
+  <script>
+    const API          = 'https://kevinmk.infinityfree.me/products.php';
+    const BASE         = 'https://kevinmk.infinityfree.me';
+    const CHECKOUT_API = 'https://kevinmk.infinityfree.me/checkout.php';
+    const CART_KEY     = 'drip_cart';
+
+    /* ── Theme ─────────────────────────────────────────────── */
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      document.querySelector('#themeToggle .toggle-icon').textContent  = t === 'light' ? '🌙' : '☀️';
+      document.querySelector('#themeToggle .toggle-label').textContent = t === 'light' ? 'DARK' : 'LIGHT';
+    }
+    applyTheme(localStorage.getItem('drip-theme') || 'dark');
+
+    function toggleTheme() {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('drip-theme', next);
+      applyTheme(next);
+    }
+
+    /* ── Cart ──────────────────────────────────────────────── */
+    function loadCart() { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch { return []; } }
+    function saveCart() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+    let cart = loadCart();
+
+    function toggleCart() { document.getElementById('cartDropdown').classList.toggle('open'); }
+
+    document.addEventListener('click', e => {
+      if (!document.querySelector('.cart-wrapper').contains(e.target))
+        document.getElementById('cartDropdown').classList.remove('open');
+    });
+
+    function addToCart(e, id, name, price, image) {
+      e.stopPropagation();
+      const item = cart.find(i => i.id === id);
+      if (item) item.qty++;
+      else cart.push({ id, name, price, image, qty: 1 });
+      saveCart();
+      renderCart();
+      const btn = document.getElementById('btn-' + id);
+      if (btn) {
+        btn.textContent = '✓ ADDED';
+        btn.classList.add('added');
+        setTimeout(() => { btn.textContent = 'ADD TO CART'; btn.classList.remove('added'); }, 1200);
+      }
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      saveCart();
+      renderCart();
+    }
+
+    function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); }
+    function clearCart()        { cart = []; saveCart(); renderCart(); }
+
+    function renderCart() {
+      const totalQty   = cart.reduce((s, i) => s + i.qty, 0);
+      const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const countEl    = document.getElementById('cartCount');
+      countEl.textContent   = totalQty;
+      countEl.style.display = totalQty > 0 ? 'flex' : 'none';
+
+      const footerEl = document.getElementById('cartFooter');
+      const itemsEl  = document.getElementById('cartItems');
+
+      if (cart.length === 0) {
+        itemsEl.innerHTML      = '<p class="cart-empty">— YOUR CART IS EMPTY —</p>';
+        footerEl.style.display = 'none';
+        return;
+      }
+
+      footerEl.style.display = 'block';
+      document.getElementById('cartTotal').textContent = 'KES ' + totalPrice.toLocaleString();
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${BASE}/${item.image}" onerror="this.src='https://placehold.co/48x48/1a1a1a/444?text=?'" alt="${item.name}" />
+          <div class="cart-item-info">
+            <strong>${item.name}</strong>
+            <p>KES ${(item.price * item.qty).toLocaleString()}</p>
+          </div>
+          <div class="cart-item-qty">
+            <button onclick="changeQty(${item.id}, -1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${item.id}, +1)">+</button>
+          </div>
+          <button class="remove-item" onclick="removeFromCart(${item.id})">✕</button>
+        </div>
+      `).join('');
+    }
+
+    /* ── Checkout ──────────────────────────────────────────── */
+    document.getElementById('checkoutBtn').addEventListener('click', openCheckout);
+
+    function openCheckout() {
+      if (cart.length === 0) return;
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      document.getElementById('checkoutItems').innerHTML = cart.map(item => `
+        <div class="checkout-item">
+          <span class="checkout-item-name">${item.name} <span>× ${item.qty}</span></span>
+          <span class="checkout-item-price">KES ${(item.price * item.qty).toLocaleString()}</span>
+        </div>
+      `).join('');
+      document.getElementById('checkoutTotalAmt').textContent = 'KES ' + total.toLocaleString();
+      document.getElementById('coName').value  = '';
+      document.getElementById('coPhone').value = '';
+      document.getElementById('coError').style.display = 'none';
+      showStep(1);
+      document.getElementById('checkoutOverlay').classList.add('open');
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutOverlay').classList.remove('open');
+    }
+
+    document.getElementById('checkoutOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeCheckout();
+    });
+
+    function showStep(n) {
+      document.getElementById('coStep1').style.display = n === 1 ? 'block' : 'none';
+      document.getElementById('coStep2').style.display = n === 2 ? 'block' : 'none';
+      document.getElementById('coStep3').style.display = n === 3 ? 'block' : 'none';
+    }
+
+    function submitCheckout() {
+      const name  = document.getElementById('coName').value.trim();
+      const phone = document.getElementById('coPhone').value.trim();
+      const errEl = document.getElementById('coError');
+      errEl.style.display = 'none';
+
+      if (!name)               { errEl.textContent = 'Please enter your full name.';     errEl.style.display = 'block'; return; }
+      if (phone.length < 9)    { errEl.textContent = 'Please enter a valid phone number.'; errEl.style.display = 'block'; return; }
+
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      showStep(2);
+
+      fetch(CHECKOUT_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, items: cart, total })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.order_id) {
+          document.getElementById('coOrderId').textContent = 'Order #' + data.order_id + (data.message ? ' · ' + data.message : '');
+          showStep(3);
+          cart = []; saveCart(); renderCart();
+        } else {
+          showStep(1);
+          errEl.textContent = data.error || 'Something went wrong. Please try again.';
+          errEl.style.display = 'block';
+        }
+      })
+      .catch(() => {
+        showStep(1);
+        errEl.textContent = 'Could not connect to server. Please try again.';
+        errEl.style.display = 'block';
+      });
+    }
+
+    /* ── Search / filter ───────────────────────────────────── */
+    let allProducts = [];
+
+    function esc(str) { return String(str).replace(/'/g, "\\'"); }
+
+    function highlight(text, q) {
+      if (!q) return text;
+      return text.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
+        '<mark class="highlight">$1</mark>');
+    }
+
+    function filterProducts() {
+      const q       = document.getElementById('searchInput').value.trim().toLowerCase();
+      const countEl = document.getElementById('resultsCount');
+      const grid    = document.getElementById('productsGrid');
+      const list    = q ? allProducts.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)) : allProducts;
+
+      countEl.style.display = q ? 'block' : 'none';
+      if (q) countEl.innerHTML = `<span>${list.length}</span> result${list.length !== 1 ? 's' : ''} for "${q}"`;
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="no-results"><strong>NO RESULTS</strong>Nothing matched "${q}". Try a different search.</div>`;
+        return;
+      }
+
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const card     = document.createElement('div');
+        card.className = 'product-card';
+        card.onclick   = () => window.location.href = BASE + '/product.html?id=' + p.id;
+        card.innerHTML = `
+          <img src="${BASE}/${p.image}" alt="${p.name}"
+               onerror="this.src='https://placehold.co/230x210/111/333?text=DRIP'" />
+          <div class="card-body">
+            <h3>${highlight(p.name, q)}</h3>
+            <p class="desc">${highlight(p.description, q)}</p>
+            <p class="price">KES ${parseFloat(p.price).toLocaleString()}</p>
+            <button class="btn-cart" id="btn-${p.id}"
+              onclick="addToCart(event,${p.id},'${esc(p.name)}',${p.price},'${esc(p.image)}')">
+              ADD TO CART
+            </button>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    /* ── Skeleton loader ───────────────────────────────────── */
+    function showSkeleton() {
+      document.getElementById('productsGrid').innerHTML = Array.from({ length: 8 }).map(() => `
+        <div class="skeleton-card">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-desc-1"></div>
+            <div class="skeleton skeleton-desc-2"></div>
+            <div class="skeleton skeleton-price"></div>
+            <div class="skeleton skeleton-btn"></div>
+          </div>
+        </div>`).join('');
+    }
+
+    /* ── Load products ─────────────────────────────────────── */
+    function loadProducts() {
+      showSkeleton();
+      fetch(API)
+        .then(res => {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(data => {
+          allProducts = Array.isArray(data) ? data : [];
+          filterProducts();
+        })
+        .catch(err => {
+          document.getElementById('productsGrid').innerHTML =
+            `<p style="color:var(--neon-pink);font-family:var(--font-mono);font-size:0.82rem;font-weight:700;letter-spacing:1px;grid-column:1/-1;">
+               ⚠ FAILED TO LOAD PRODUCTS — ${err.message}
+             </p>`;
+        });
+    }
+
+    /* ── Init ──────────────────────────────────────────────── */
+    renderCart();
+    loadProducts();
+  </script>
+
+</body>
+</html>
