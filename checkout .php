@@ -111,7 +111,6 @@ curl_setopt_array($ch, [
     CURLOPT_TIMEOUT        => 15,
 ]);
 $tokenData   = json_decode(curl_exec($ch), true);
-curl_close($ch);
 $accessToken = $tokenData['access_token'] ?? null;
 
 if (!$accessToken) {
@@ -154,7 +153,6 @@ curl_setopt_array($ch, [
     CURLOPT_TIMEOUT        => 30,
 ]);
 $stkData = json_decode(curl_exec($ch), true);
-curl_close($ch);
 
 if (isset($stkData['ResponseCode']) && $stkData['ResponseCode'] === '0') {
     echo json_encode([
